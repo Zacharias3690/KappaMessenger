@@ -10,9 +10,11 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 public class MessageItemAdapter extends ArrayAdapter<MessageListItem> {
+    ArrayList<MessageListItem> items;
 
     public MessageItemAdapter(Context context, ArrayList<MessageListItem> messageListItems) {
         super(context, 0, messageListItems);
+        this.items = messageListItems;
     }
 
     public View getView(int position, View convertView, ViewGroup parent) {

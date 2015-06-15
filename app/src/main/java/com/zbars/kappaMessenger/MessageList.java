@@ -1,9 +1,13 @@
 package com.zbars.kappaMessenger;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -11,7 +15,7 @@ import java.util.ArrayList;
 
 public class MessageList extends AppCompatActivity {
 
-    ArrayList<MessageListItem> items = new ArrayList<MessageListItem>();
+    ArrayList<MessageListItem> items = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +26,17 @@ public class MessageList extends AppCompatActivity {
         ListView listView = (ListView) findViewById(R.id.listView);
 
         listView.setAdapter(messageItemAdapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                MessageListItem item = items.get(position);
+
+                Intent intent = new Intent(MessageList.this, MessageActivity.class);
+                intent.putExtra("user", item.user);
+                intent.putExtra("id", item.id);
+                startActivity(intent);
+            }
+        });
 
         messageItemAdapter.add(new MessageListItem(1, "Zach", 1));
         messageItemAdapter.add(new MessageListItem(2, "Spo", 2));
