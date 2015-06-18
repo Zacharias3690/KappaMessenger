@@ -1,13 +1,11 @@
 package com.zbars.kappaMessenger;
 
 public class MessageListItem {
-    int id;
     int messageCount;
-    String user;
+    String phoneNumber;
 
-    public MessageListItem(int id, String user, int messageCount) {
-        this.id = id;
-        this.user = user;
+    public MessageListItem(String phoneNumber, int messageCount) {
+        this.phoneNumber = phoneNumber;
         this.messageCount = messageCount;
     }
 

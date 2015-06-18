@@ -26,7 +26,7 @@ public class MessageItemAdapter extends ArrayAdapter<MessageListItem> {
         TextView tvUser = (TextView) convertView.findViewById(R.id.User);
         TextView tvMessageCount = (TextView) convertView.findViewById(R.id.MessageCount);
 
-        tvUser.setText(item.user);
+        tvUser.setText(item.phoneNumber);
         tvMessageCount.setText(Integer.toString(item.messageCount));
 
         return convertView;

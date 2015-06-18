@@ -11,16 +11,20 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 
 public class MessageList extends AppCompatActivity {
 
     ArrayList<MessageListItem> items = new ArrayList<>();
+    MessageService messageService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_message_list);
+
+        messageService = new MessageService(this);
 
         MessageItemAdapter messageItemAdapter = new MessageItemAdapter(this, items);
         ListView listView = (ListView) findViewById(R.id.listView);
@@ -32,16 +36,16 @@ public class MessageList extends AppCompatActivity {
                 MessageListItem item = items.get(position);
 
                 Intent intent = new Intent(MessageList.this, MessageActivity.class);
-                intent.putExtra("user", item.user);
-                intent.putExtra("id", item.id);
+                intent.putExtra("phoneNumber", item.phoneNumber);
                 startActivity(intent);
             }
         });
 
-        messageItemAdapter.add(new MessageListItem(1, "Zach", 1));
-        messageItemAdapter.add(new MessageListItem(2, "Spo", 2));
-        messageItemAdapter.add(new MessageListItem(3, "Andy", 3));
-        messageItemAdapter.add(new MessageListItem(4, "Christie", 4));
+        ArrayList<MessageListItem> messages = getMessages();
+
+        for(int i = 0; i < messages.size(); i++) {
+            messageItemAdapter.add(messages.get(i));
+        }
     }
 
     @Override
@@ -63,6 +67,24 @@ public class MessageList extends AppCompatActivity {
             return true;
         }
 
+        if(id == R.id.action_add) {
+            Intent intent = new Intent(MessageList.this, MessageAddActivity.class);
+            startActivity(intent);
+        }
+
         return super.onOptionsItemSelected(item);
+    }
+
+    public ArrayList<MessageListItem> getMessages() {
+        ArrayList<MessageListItem> messages = new ArrayList<>();
+
+        ArrayList<Map<String, String>> messageList = messageService.getAllMessages();
+        for(int i = 0; i < messageList.size(); i++) {
+            Map<String, String> listItem = messageList.get(i);
+            MessageListItem item = new MessageListItem(listItem.get("phoneNumber"), Integer.parseInt(listItem.get("messageCount")));
+            messages.add(item);
+        }
+
+        return messages;
     }
 }
