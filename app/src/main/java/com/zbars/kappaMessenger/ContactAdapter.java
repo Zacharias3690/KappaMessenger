@@ -20,7 +20,7 @@ public class ContactAdapter extends ArrayAdapter<Contact> {
     public ContactAdapter(Context context, int viewResourceId, ArrayList<Contact> contacts) {
         super(context, viewResourceId, contacts);
         this.viewResourceId = viewResourceId;
-        this.originalItems = (ArrayList<Contact>) contacts.clone();
+        this.originalItems = new ArrayList<>(contacts);
         this.results = new ArrayList<>();
     }
 
@@ -46,11 +46,6 @@ public class ContactAdapter extends ArrayAdapter<Contact> {
     }
 
     private Filter contactFilter = new Filter() {
-        @Override
-        public String convertResultToString(Object resultValue) {
-            return ((Contact)(resultValue)).name;
-        }
-
         @Override
         public FilterResults performFiltering(CharSequence constraint) {
             if(constraint != null) {

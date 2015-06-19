@@ -10,4 +10,8 @@ public class Contact {
         this.name = name;
         this.type = type;
     }
+
+    public String toString() {
+        return name;
+    }
 }
