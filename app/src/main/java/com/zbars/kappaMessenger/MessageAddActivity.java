@@ -16,21 +16,16 @@ import java.util.Map;
 
 public class MessageAddActivity extends AppCompatActivity {
 
-    private ArrayList<Contact> contactList;
-    private ContactService contactService;
-    private MultiAutoCompleteTextView contactTextView;
-    private ContactAdapter contactAdapter;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_message_add);
 
-        contactService = new ContactService(this);
-        contactList = contactService.getContacts();
+        ContactService contactService = new ContactService(this);
+        ArrayList<Contact> contactList = contactService.getContacts();
 
-        contactTextView = (MultiAutoCompleteTextView) findViewById(R.id.contactAutoComplete);
-        contactAdapter = new ContactAdapter(this, R.layout.contact_typeahead_view, contactList);
+        MultiAutoCompleteTextView contactTextView = (MultiAutoCompleteTextView) findViewById(R.id.contactAutoComplete);
+        ContactAdapter contactAdapter = new ContactAdapter(this, R.layout.contact_typeahead_view, contactList);
         contactTextView.setAdapter(contactAdapter);
         contactTextView.setThreshold(1);
         contactTextView.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());

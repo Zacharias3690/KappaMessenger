@@ -1,34 +1,27 @@
 package com.zbars.kappaMessenger;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Filter;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
-/**
- * Created by Zach on 6/18/2015.
- */
 public class ContactAdapter extends ArrayAdapter<Contact> {
     private static final String TAG = "ContactAdapter";
 
     private int viewResourceId;
     private ArrayList<Contact> originalItems;
-    private ArrayList<Contact> contacts;
     private ArrayList<Contact> results;
 
     public ContactAdapter(Context context, int viewResourceId, ArrayList<Contact> contacts) {
         super(context, viewResourceId, contacts);
         this.viewResourceId = viewResourceId;
-        this.contacts = contacts;
         this.originalItems = (ArrayList<Contact>) contacts.clone();
-        this.results = new ArrayList<Contact>();
+        this.results = new ArrayList<>();
     }
 
     public View getView(int position, View convertView, ViewGroup parent) {
@@ -81,7 +74,7 @@ public class ContactAdapter extends ArrayAdapter<Contact> {
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
             ArrayList<Contact> filteredList = (ArrayList<Contact>) results.values;
-            if(results != null && results.count > 0) {
+            if(results.count > 0) {
                 clear();
                 for(Contact c : filteredList) {
                     add(c);

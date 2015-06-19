@@ -1,8 +1,5 @@
 package com.zbars.kappaMessenger;
 
-/**
- * Created by Zach on 6/18/2015.
- */
 public class Contact {
     String phone;
     String name;

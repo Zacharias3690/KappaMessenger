@@ -10,9 +10,6 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by Zach on 6/18/2015.
- */
 public class ContactService {
 
     Context context;
@@ -37,15 +34,21 @@ public class ContactService {
             String numberType = phoneNumbers.getString(phoneNumbers.getColumnIndex(ContactsContract.CommonDataKinds.Phone.TYPE));
             String contactName = phoneNumbers.getString(phoneNumbers.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));
 
-            String type = "";
-            if(numberType.equals("0"))
-                type = "Work";
-            else if(numberType.equals("1"))
-                type = "Home";
-            else if(numberType.equals("2"))
-                type = "Mobile";
-            else
-                type = "Other";
+            String type;
+            switch (numberType) {
+                case "0":
+                    type = "Work";
+                    break;
+                case "1":
+                    type = "Home";
+                    break;
+                case "2":
+                    type = "Mobile";
+                    break;
+                default:
+                    type = "Other";
+                    break;
+            }
 
             Contact contactInfo = new Contact(phoneNumber, contactName, type);
 
