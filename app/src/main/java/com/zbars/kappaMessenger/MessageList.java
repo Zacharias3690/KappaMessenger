@@ -1,9 +1,13 @@
 package com.zbars.kappaMessenger;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.Telephony;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -45,6 +49,20 @@ public class MessageList extends AppCompatActivity {
 
         for(int i = 0; i < messages.size(); i++) {
             messageItemAdapter.add(messages.get(i));
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        final String myPackageName = getPackageName();
+
+        //TODO reactive when settings exist
+        if(!Telephony.Sms.getDefaultSmsPackage(this).equals(myPackageName)) {
+//            Intent intent = new Intent(Telephony.Sms.Intents.ACTION_CHANGE_DEFAULT);
+//            intent.putExtra(Telephony.Sms.Intents.EXTRA_PACKAGE_NAME, myPackageName);
+//            startActivity(intent);
         }
     }
 

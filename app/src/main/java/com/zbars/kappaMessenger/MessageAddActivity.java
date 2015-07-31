@@ -116,8 +116,6 @@ public class MessageAddActivity extends AppCompatActivity {
                 address = c;
             }
 
-            Log.v(TAG, address);
-            Log.v(TAG, messageBody);
             try {
                 smsManager.sendTextMessage(address, null, messageBody, null, null);
             } catch (IllegalArgumentException e) {

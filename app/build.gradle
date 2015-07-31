@@ -4,8 +4,8 @@ android {
     compileSdkVersion 22
     buildToolsVersion '22.0.1'
     defaultConfig {
-        applicationId 'com.zbars.twitchmessaging'
-        minSdkVersion 15
+        applicationId 'com.zbars.kappaMessenger'
+        minSdkVersion 19
         targetSdkVersion 22
         versionCode 1
         versionName "1.0"
