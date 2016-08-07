@@ -1,5 +1,6 @@
 package com.zbars.kappaMessenger;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -35,6 +36,14 @@ public class MessageService {
         db.close();
 
         return messageList;
+    }
+
+    public void addMessage(String phoneNumber, String message) {
+        SQLiteDatabase db = dbContext.getReadableDatabase();
+        ContentValues messageItem = new ContentValues();
+        messageItem.put("PhoneNumber", phoneNumber);
+        messageItem.put("Text", message);
+        db.insert("Message", null, messageItem);
     }
 
 
