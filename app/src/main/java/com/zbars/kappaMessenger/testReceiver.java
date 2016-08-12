@@ -4,8 +4,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
-public class MmsReceiver extends BroadcastReceiver {
-    public MmsReceiver() {
+public class testReceiver extends BroadcastReceiver {
+    public testReceiver() {
     }
 
     @Override

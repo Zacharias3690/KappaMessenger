@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.provider.Telephony;
 import android.telephony.SmsMessage;
 import android.util.Log;
+import android.widget.Toast;
 
 public class SmsReceiver extends BroadcastReceiver {
     public SmsReceiver() {
@@ -18,6 +19,8 @@ public class SmsReceiver extends BroadcastReceiver {
 
         for (SmsMessage message : messages) {
             messageService.addMessage(message.getDisplayOriginatingAddress(), message.getDisplayMessageBody());
+            Toast toast = Toast.makeText(context, "Sender: " + message.getDisplayOriginatingAddress() + " Message: " + message.getDisplayMessageBody(), Toast.LENGTH_LONG);
+            toast.show();
         }
     }
 }

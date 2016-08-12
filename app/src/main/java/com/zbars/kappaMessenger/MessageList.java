@@ -22,6 +22,8 @@ public class MessageList extends AppCompatActivity {
 
     ArrayList<MessageListItem> items = new ArrayList<>();
     MessageService messageService;
+    ArrayList<MessageListItem> messages;
+    MessageItemAdapter messageItemAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,8 +31,7 @@ public class MessageList extends AppCompatActivity {
         setContentView(R.layout.activity_message_list);
 
         messageService = new MessageService(this);
-
-        MessageItemAdapter messageItemAdapter = new MessageItemAdapter(this, items);
+        messageItemAdapter = new MessageItemAdapter(this, items);
         ListView listView = (ListView) findViewById(R.id.listView);
 
         listView.setAdapter(messageItemAdapter);
@@ -45,7 +46,7 @@ public class MessageList extends AppCompatActivity {
             }
         });
 
-        ArrayList<MessageListItem> messages = getMessages();
+        messages = getMessages();
 
         for(int i = 0; i < messages.size(); i++) {
             messageItemAdapter.add(messages.get(i));
@@ -63,6 +64,13 @@ public class MessageList extends AppCompatActivity {
 //            Intent intent = new Intent(Telephony.Sms.Intents.ACTION_CHANGE_DEFAULT);
 //            intent.putExtra(Telephony.Sms.Intents.EXTRA_PACKAGE_NAME, myPackageName);
 //            startActivity(intent);
+        }
+
+        messages = getMessages();
+
+        messageItemAdapter.clear();
+        for(int i = 0; i < messages.size(); i++) {
+            messageItemAdapter.add(messages.get(i));
         }
     }
 
@@ -97,6 +105,7 @@ public class MessageList extends AppCompatActivity {
         ArrayList<MessageListItem> messages = new ArrayList<>();
 
         ArrayList<Map<String, String>> messageList = messageService.getAllMessages();
+        Log.d("MessageList", Integer.toString(messageList.size()));
         for(int i = 0; i < messageList.size(); i++) {
             Map<String, String> listItem = messageList.get(i);
             MessageListItem item = new MessageListItem(listItem.get("phoneNumber"), Integer.parseInt(listItem.get("messageCount")));
