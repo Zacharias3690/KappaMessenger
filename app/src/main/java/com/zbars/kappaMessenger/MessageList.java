@@ -59,11 +59,11 @@ public class MessageList extends AppCompatActivity {
 
         final String myPackageName = getPackageName();
 
-        //TODO reactive when settings exist
+        //TODO reactivate when settings exist
         if(!Telephony.Sms.getDefaultSmsPackage(this).equals(myPackageName)) {
-//            Intent intent = new Intent(Telephony.Sms.Intents.ACTION_CHANGE_DEFAULT);
-//            intent.putExtra(Telephony.Sms.Intents.EXTRA_PACKAGE_NAME, myPackageName);
-//            startActivity(intent);
+            Intent intent = new Intent(Telephony.Sms.Intents.ACTION_CHANGE_DEFAULT);
+            intent.putExtra(Telephony.Sms.Intents.EXTRA_PACKAGE_NAME, myPackageName);
+            startActivity(intent);
         }
 
         messages = getMessages();
