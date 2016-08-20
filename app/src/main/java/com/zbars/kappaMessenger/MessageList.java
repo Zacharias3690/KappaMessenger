@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.provider.Telephony;
 import android.support.v7.app.AppCompatActivity;
@@ -58,12 +59,18 @@ public class MessageList extends AppCompatActivity {
         super.onResume();
 
         final String myPackageName = getPackageName();
+        final SharedPreferences preferences = getPreferences(MODE_PRIVATE);
+        Boolean showChangeSmsDialog = true;
 
-        //TODO reactivate when settings exist
-        if(!Telephony.Sms.getDefaultSmsPackage(this).equals(myPackageName)) {
+        if(preferences.contains("CHANGE_SMS")) {
+            showChangeSmsDialog = preferences.getBoolean("CHANGE_SMS", true);
+        }
+
+        if(!Telephony.Sms.getDefaultSmsPackage(this).equals(myPackageName) && showChangeSmsDialog) {
             Intent intent = new Intent(Telephony.Sms.Intents.ACTION_CHANGE_DEFAULT);
             intent.putExtra(Telephony.Sms.Intents.EXTRA_PACKAGE_NAME, myPackageName);
             startActivity(intent);
+            preferences.edit().putBoolean("CHANGE_SMS", false).apply();
         }
 
         messages = getMessages();
