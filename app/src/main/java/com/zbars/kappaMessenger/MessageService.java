@@ -18,17 +18,15 @@ public class MessageService {
 
     public ArrayList<Map<String, String>> getAllMessages() {
         SQLiteDatabase db = dbContext.getReadableDatabase();
-        Cursor c = db.rawQuery("SELECT PhoneNumber, count(Text) FROM Message GROUP BY PhoneNumber", null);
+        Cursor c = db.rawQuery("SELECT Participants FROM Conversation", null);
 
         ArrayList<Map<String, String>> messageList = new ArrayList<>();
 
         if(c.moveToFirst()) {
             do {
                 Map<String, String> map = new HashMap<>();
-                String phoneNumber = c.getString(0);
-                int count = c.getInt(1);
-                map.put("phoneNumber", phoneNumber);
-                map.put("messageCount", Integer.toString(count));
+                String participants = c.getString(0);
+                map.put("participants", participants);
                 messageList.add(map);
             } while(c.moveToNext());
         }
@@ -38,11 +36,31 @@ public class MessageService {
         return messageList;
     }
 
-    public void addMessage(String phoneNumber, String message) {
+    public void addMessage(String sender, String message) {
+        addMessage(sender, message, -1);
+    }
+
+    public void addMessage(String sender, String message, int conversationId) {
+        ContentValues messageItem;
         SQLiteDatabase db = dbContext.getReadableDatabase();
-        ContentValues messageItem = new ContentValues();
-        messageItem.put("PhoneNumber", phoneNumber);
-        messageItem.put("Text", message);
+        long row = -1;
+
+        if (conversationId == -1) {
+            ContentValues conversationItem = new ContentValues();
+
+            conversationItem.put("participants", sender);
+            row = db.insert("Conversation", null, conversationItem);
+            //add new conversation or check for existing by participants
+        }
+
+        messageItem = new ContentValues();
+        messageItem.put("Sender", sender);
+        messageItem.put("Message", message);
+
+        if (row != -1) {
+            messageItem.put("ConversationId", row);
+        }
+
         db.insert("Message", null, messageItem);
     }
 

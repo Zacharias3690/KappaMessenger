@@ -42,7 +42,7 @@ public class MessageList extends AppCompatActivity {
                 MessageListItem item = items.get(position);
 
                 Intent intent = new Intent(MessageList.this, MessageActivity.class);
-                intent.putExtra("phoneNumber", item.phoneNumber);
+                intent.putExtra("ConversationId", item.conversationId);
                 startActivity(intent);
             }
         });
@@ -115,7 +115,7 @@ public class MessageList extends AppCompatActivity {
         Log.d("MessageList", Integer.toString(messageList.size()));
         for(int i = 0; i < messageList.size(); i++) {
             Map<String, String> listItem = messageList.get(i);
-            MessageListItem item = new MessageListItem(listItem.get("phoneNumber"), Integer.parseInt(listItem.get("messageCount")));
+            MessageListItem item = new MessageListItem(Integer.parseInt(listItem.get("Id")), listItem.get("Participants"));
             messages.add(item);
         }
 
