@@ -16,12 +16,12 @@ android:background="@color/background_gray">
     android:maxLines="1"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:textSize="30sp" />
+    android:textSize="16sp" />
 
 <TextView
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:textSize="25sp"
+    android:textSize="24sp"
     android:paddingLeft="10dp"
     android:paddingRight="10dp"
     android:textColor="#aaa"

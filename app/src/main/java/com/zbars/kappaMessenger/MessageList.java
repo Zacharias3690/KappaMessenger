@@ -1,8 +1,5 @@
 package com.zbars.kappaMessenger;
 
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -24,7 +21,7 @@ public class MessageList extends AppCompatActivity {
     ArrayList<MessageListItem> items = new ArrayList<>();
     MessageService messageService;
     ArrayList<MessageListItem> messages;
-    MessageItemAdapter messageItemAdapter;
+    MessageListItemAdapter messageItemAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +29,7 @@ public class MessageList extends AppCompatActivity {
         setContentView(R.layout.activity_message_list);
 
         messageService = new MessageService(this);
-        messageItemAdapter = new MessageItemAdapter(this, items);
+        messageItemAdapter = new MessageListItemAdapter(this, items);
         ListView listView = (ListView) findViewById(R.id.listView);
 
         listView.setAdapter(messageItemAdapter);

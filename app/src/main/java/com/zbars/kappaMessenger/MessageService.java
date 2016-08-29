@@ -18,15 +18,38 @@ public class MessageService {
 
     public ArrayList<Map<String, String>> getAllMessages() {
         SQLiteDatabase db = dbContext.getReadableDatabase();
-        Cursor c = db.rawQuery("SELECT Participants FROM Conversation", null);
+        Cursor c = db.rawQuery("SELECT Id, Participants FROM Conversation", null);
 
         ArrayList<Map<String, String>> messageList = new ArrayList<>();
 
         if(c.moveToFirst()) {
             do {
                 Map<String, String> map = new HashMap<>();
-                String participants = c.getString(0);
-                map.put("participants", participants);
+                String id = c.getString(0);
+                String participants = c.getString(1);
+                map.put("Id", id);
+                map.put("Participants", participants);
+                messageList.add(map);
+            } while(c.moveToNext());
+        }
+        c.close();
+        db.close();
+
+        return messageList;
+    }
+
+    public ArrayList<Map<String, String>> getMessages(int conversationId) {
+        SQLiteDatabase db = dbContext.getReadableDatabase();
+        Cursor c = db.rawQuery("SELECT ConversationId, Sender, Message FROM Message WHERE ConversationId = " + conversationId, null);
+
+        ArrayList<Map<String, String>> messageList = new ArrayList<>();
+
+        if(c.moveToFirst()) {
+            do {
+                Map<String, String> map = new HashMap<>();
+                map.put("ConversationId", c.getString(0));
+                map.put("Sender", c.getString(1));
+                map.put("Message", c.getString(2));
                 messageList.add(map);
             } while(c.moveToNext());
         }
@@ -48,7 +71,7 @@ public class MessageService {
         if (conversationId == -1) {
             ContentValues conversationItem = new ContentValues();
 
-            conversationItem.put("participants", sender);
+            conversationItem.put("Participants", sender);
             row = db.insert("Conversation", null, conversationItem);
             //add new conversation or check for existing by participants
         }

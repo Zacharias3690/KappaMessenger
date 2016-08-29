@@ -3,17 +3,34 @@ package com.zbars.kappaMessenger;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.zbars.kappaMessenger.R;
 
+import java.util.ArrayList;
+import java.util.Map;
+
 public class MessageActivity extends AppCompatActivity {
+    ArrayList<MessageItem> messages;
+    MessageItemAdapter messageItemAdapter;
+    MessageService messageService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_message);
+
+        Bundle extras = getIntent().getExtras();
+
+        messageService = new MessageService(this);
+        messages = getMessages(extras.getInt("conversationId"));
+
+        messageItemAdapter.clear();
+        for(int i = 0; i < messages.size(); i++) {
+            messageItemAdapter.add(messages.get(i));
+        }
     }
 
     @Override
@@ -36,5 +53,14 @@ public class MessageActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public ArrayList<MessageItem> getMessages(int conversationId) {
+        ArrayList<Map<String, String>> messageList = messageService.getMessages(conversationId);
+
+        messageList = messageService.getMessages(conversationId);
+        Log.d("MessageDetail", Integer.toString(messageList.size()));
+
+        return null;
     }
 }
