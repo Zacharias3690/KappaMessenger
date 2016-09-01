@@ -8,7 +8,7 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:isScrollContainer="true"
-        android:id="@+id/listView"
+        android:id="@+id/detailListView"
         android:background="@color/background_list_gray"/>
 
     <LinearLayout

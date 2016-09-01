@@ -15,7 +15,7 @@ import java.sql.PreparedStatement;
 
 public class DatabaseContext extends SQLiteOpenHelper {
 
-    private static final int DATABASE_VERSION = 10;
+    private static final int DATABASE_VERSION = 11;
 
     private static final String DATABASE_NAME = "KappaMessengerDatabase";
 
@@ -53,7 +53,7 @@ public class DatabaseContext extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CONVERSATION_TABLE_CREATE);
         db.execSQL(MESSAGE_TABLE_CREATE);
-        buildTestData(db);
+        buildSeedData(db);
     }
 
     @Override
@@ -62,22 +62,22 @@ public class DatabaseContext extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE " + CONVERSATION_TABLE_NAME);
         db.execSQL(MESSAGE_TABLE_CREATE);
         db.execSQL(CONVERSATION_TABLE_CREATE);
-        buildTestData(db);
+        buildSeedData(db);
     }
 
-    private void buildTestData(SQLiteDatabase db) {
-        String query = "INSERT INTO Conversation (Id, Participants) VALUES (1, \"5125871596,5122805609\");\n" +
-                "INSERT INTO Conversation (Id, Participants) VALUES (2, \"5125871596,5122805610\");\n" +
-                "INSERT INTO Conversation (Id, Participants) VALUES (3, \"5125871596,5122805611\");\n" +
+    private void buildSeedData(SQLiteDatabase db) {
+        String query = "INSERT INTO Conversation (Id, Participants) VALUES (1, \"5122805609\");\n" +
+                "INSERT INTO Conversation (Id, Participants) VALUES (2, \"5122805610\");\n" +
+                "INSERT INTO Conversation (Id, Participants) VALUES (3, \"5122805611\");\n" +
 
-                "INSERT INTO Message (Id, Sender, Message, ConversationId) VALUES (1, \"5125871596\", \"Test Message 1\", 1);\n" +
+                "INSERT INTO Message (Id, Sender, Message, ConversationId) VALUES (1, \"self\", \"Test Message 1\", 1);\n" +
                 "INSERT INTO Message (Id, Sender, Message, ConversationId) VALUES (2, \"5122805609\", \"Test Message 2\", 1);\n" +
                 "INSERT INTO Message (Id, Sender, Message, ConversationId) VALUES (3, \"5122805609\", \"Test Message 3\", 1);\n" +
-                "INSERT INTO Message (Id, Sender, Message, ConversationId) VALUES (4, \"5125871596\", \"Test Message 4\", 1);\n" +
+                "INSERT INTO Message (Id, Sender, Message, ConversationId) VALUES (4, \"self\", \"Test Message 4\", 1);\n" +
 
-                "INSERT INTO Message (Id, Sender, Message, ConversationId) VALUES (5, \"5125871596\", \"Test Message 1\", 2);\n" +
+                "INSERT INTO Message (Id, Sender, Message, ConversationId) VALUES (5, \"self\", \"Test Message 1\", 2);\n" +
                 "INSERT INTO Message (Id, Sender, Message, ConversationId) VALUES (6, \"5125875610\", \"Test Message 2\", 2);\n" +
-                "INSERT INTO Message (Id, Sender, Message, ConversationId) VALUES (7, \"5125871596\", \"Test Message 3\", 2);";
+                "INSERT INTO Message (Id, Sender, Message, ConversationId) VALUES (7, \"self\", \"Test Message 3\", 2);";
 
         String[] testData = query.split("\n");
         for (String testDataQuery : testData) {

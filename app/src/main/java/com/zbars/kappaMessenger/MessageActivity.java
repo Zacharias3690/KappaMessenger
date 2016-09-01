@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ListView;
 
 import com.zbars.kappaMessenger.R;
 
@@ -13,9 +14,10 @@ import java.util.ArrayList;
 import java.util.Map;
 
 public class MessageActivity extends AppCompatActivity {
-    ArrayList<MessageItem> messages;
+    ArrayList<MessageItem> messages = new ArrayList<>();
     MessageItemAdapter messageItemAdapter;
     MessageService messageService;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,12 +27,17 @@ public class MessageActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
 
         messageService = new MessageService(this);
-        messages = getMessages(extras.getInt("conversationId"));
+        messageItemAdapter = new MessageItemAdapter(this, messages);
+        messages = getMessages(extras.getInt("ConversationId"));
+        ListView messageListView = (ListView) findViewById(R.id.detailListView);
 
-        messageItemAdapter.clear();
+        messageListView.setAdapter(messageItemAdapter);
+
         for(int i = 0; i < messages.size(); i++) {
             messageItemAdapter.add(messages.get(i));
         }
+
+
     }
 
     @Override
@@ -56,11 +63,20 @@ public class MessageActivity extends AppCompatActivity {
     }
 
     public ArrayList<MessageItem> getMessages(int conversationId) {
+        ArrayList<MessageItem> messages = new ArrayList<>();
         ArrayList<Map<String, String>> messageList = messageService.getMessages(conversationId);
+        Log.d("MessageDetail", "Message List Size: " + Integer.toString(messageList.size()));
 
-        messageList = messageService.getMessages(conversationId);
-        Log.d("MessageDetail", Integer.toString(messageList.size()));
 
-        return null;
+        for(int i = 0; i < messageList.size(); i++) {
+            Map<String, String> listItem = messageList.get(i);
+            Log.d("MessageDetail", "Sender: " + listItem.get("Sender")+ " Message: " + listItem.get("Sender"));
+            MessageItem item = new MessageItem(conversationId, listItem.get("Message"), listItem.get("Sender"));
+            messages.add(item);
+        }
+
+        Log.d("MessageDetail", "Converted Message List Size: " + messages.size());
+
+        return messages;
     }
 }

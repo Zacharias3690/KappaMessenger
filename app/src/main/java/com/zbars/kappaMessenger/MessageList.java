@@ -39,6 +39,7 @@ public class MessageList extends AppCompatActivity {
                 MessageListItem item = items.get(position);
 
                 Intent intent = new Intent(MessageList.this, MessageActivity.class);
+                Log.d("MessageList", "ConversationId = " + Integer.toString(item.conversationId));
                 intent.putExtra("ConversationId", item.conversationId);
                 startActivity(intent);
             }
