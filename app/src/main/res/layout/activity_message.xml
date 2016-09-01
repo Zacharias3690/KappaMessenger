@@ -9,6 +9,7 @@
         android:layout_weight="1"
         android:isScrollContainer="true"
         android:id="@+id/detailListView"
+        android:divider="@null"
         android:background="@color/background_list_gray"/>
 
     <LinearLayout

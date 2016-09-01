@@ -26,6 +26,8 @@ public class MessageActivity extends AppCompatActivity {
 
         Bundle extras = getIntent().getExtras();
 
+        setTitle(extras.getString("Participants"));
+
         messageService = new MessageService(this);
         messageItemAdapter = new MessageItemAdapter(this, messages);
         messages = getMessages(extras.getInt("ConversationId"));

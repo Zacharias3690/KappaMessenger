@@ -3,9 +3,35 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
+    <LinearLayout
+        android:id="@+id/messageWrapper"
+        android:orientation="vertical"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="test"
-        android:id="@+id/messageText" />
+        android:background="@drawable/message_container"
+
+        android:paddingTop="4dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:paddingBottom="4dp"
+        android:layout_margin="8dp">
+
+        <TextView
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Message"
+            android:textColor="@color/primary_text_default_material_dark"
+            android:id="@+id/messageText" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sender"
+            android:layout_marginBottom="4dp"
+            android:textColor="@color/secondary_text_default_material_dark"
+            android:id="@+id/messageSender" />
+    </LinearLayout>
+
 </LinearLayout>

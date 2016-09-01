@@ -5,4 +5,6 @@
     <color name="background_gray">#EFEFEF</color>
     <color name="background_list_gray">#D9D9D9</color>
     <color name="border_gray">#ccc</color>
+    <color name="background_message_gray">#B0BEC5</color>
+    <color name="background_message_blue">#03A9F4</color>
 </resources>

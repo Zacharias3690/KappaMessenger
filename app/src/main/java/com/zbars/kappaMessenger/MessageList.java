@@ -41,6 +41,7 @@ public class MessageList extends AppCompatActivity {
                 Intent intent = new Intent(MessageList.this, MessageActivity.class);
                 Log.d("MessageList", "ConversationId = " + Integer.toString(item.conversationId));
                 intent.putExtra("ConversationId", item.conversationId);
+                intent.putExtra("Participants", item.participants);
                 startActivity(intent);
             }
         });
